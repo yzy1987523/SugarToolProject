@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 20190909
-/// 这是一个随机工具，需要提前设置选项,权重越高，越容易roll出来
+/// 通用工具类
+/// 1.权重随机：根据可选项的权重随机返回一个选项
 /// </summary>
-public class RandomTool : MonoBehaviour
+public class NormalTool
 {
-    public string[] options;
-    public float[] optionWeights;
-
-    public int ToRandom()
-    {
-        var r = Random.value;
+    //权重随机：_roll是0-1的随机数
+    public static int GetRandomIndex(float[] _optionWeights,float _roll)
+    {        
         float sum = 0f;
-        for(var i=0;i< optionWeights.Length; i++)
+        for (var i = 0; i < _optionWeights.Length; i++)
         {
-            sum += optionWeights[i];
+            sum += _optionWeights[i];
         }
-        var a = new float[optionWeights.Length];
+        var a = new float[_optionWeights.Length];
         for (int j = 0; j < a.Length; j++)
         {
             a[j] /= sum;
@@ -28,7 +25,7 @@ public class RandomTool : MonoBehaviour
         while (n < a.Length)
         {
             x += a[n];
-            if (r <= x)
+            if (_roll <= x)
             {
                 return n;
             }
