@@ -108,4 +108,13 @@ public static class ExpandMethods
         return null;
 
     }
+    // 多用于旋转控制时，用于限制角度
+    public static float ClampAngle(this float angle, float min, float max)
+    {
+        if (angle < -360)
+            angle += 360;
+        if (angle > 360)
+            angle -= 360;
+        return Mathf.Clamp(angle, min, max);
+    }
 }

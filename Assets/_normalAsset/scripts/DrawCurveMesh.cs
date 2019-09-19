@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace GLA_Tool
+/// <summary>
+/// 注意：传入的list的key取值要在0-1中！！！
+/// </summary>
+namespace YZY_Tool
 {
     public class DrawCurveMesh : MonoBehaviour
     {
         #region Parameters
         //每2个定点为一组，此值代表有多少组
-        const int count = 61;
+        int count = 60;
         //每两组顶点的间隔距离，此值越小曲线越平滑
         const float pointdis = 0.2f;
 
@@ -17,9 +19,9 @@ namespace GLA_Tool
         MeshRenderer mr;
         public AnimationCurve curve;
         public CurveType curveType;
-        public float maxHeight = 5;
+        public float maxHeight = 1;
         private List<Vector2> m_points;
-
+        public Material mat;
         //MeshCollider mc;
         #endregion
 
@@ -33,6 +35,12 @@ namespace GLA_Tool
                 if (filter == null)
                 {
                     filter = GetComponent<MeshFilter>();
+                    if (filter == null)
+                    {
+                        Mr.material= mat;
+                        filter =gameObject.AddComponent<MeshFilter>();
+                    }
+
                 }
                 return filter;
             }
@@ -50,6 +58,10 @@ namespace GLA_Tool
                 if (mr == null)
                 {
                     mr = GetComponent<MeshRenderer>();
+                    if (mr == null)
+                    {
+                        mr = gameObject.AddComponent<MeshRenderer>();
+                    }
                 }
                 return mr;
             }
@@ -122,7 +134,7 @@ namespace GLA_Tool
             DrawSquare(curve);
         }
         [ContextMenu("Draw")]
-        public void DrawSquare()
+        void DrawSquare()
         {
             DrawSquare(curve);
         }
@@ -130,7 +142,8 @@ namespace GLA_Tool
 
         #endregion
 
-        #region Private Methods  
+        #region Private Methods 
+        
         void DrawSquare(AnimationCurve animCurve)
         {
             //创建mesh
@@ -151,7 +164,7 @@ namespace GLA_Tool
 
             //三角形数组
             List<int> triangleList = new List<int>();
-
+            //count = animCurve.length;
             for (int i = 0; i < count; i++)
             {
                 //计算当前列位于什么位置
@@ -182,7 +195,7 @@ namespace GLA_Tool
             Mesh.triangles = triangleList.ToArray();
             Mesh.uv = uvList.ToArray();
             Mesh.RecalculateNormals();
-
+            
             //把mesh赋予MeshCollider
             Filter.sharedMesh = Mesh;
         }

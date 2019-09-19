@@ -4,6 +4,11 @@ using UnityEngine;
 
 
 public interface ISetValue {    
-    void SetValue(int _index,ValueData _value);
+    void SetValue(MorphingValueType _type,ValueData _value);    
 } 
+public interface ISelectable
+{
+    void Select();
+    void QuitSelect();
+}
 
