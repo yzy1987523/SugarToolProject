@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// 计时器工具
@@ -7,10 +8,12 @@ using UnityEngine;
 /// </summary>
 public class Timer
 {
+    
     float targetTime;
     float curTime;
     public Timer(float _time)
     {
+        
         curTime = 0;
         targetTime = _time;
     }
@@ -26,5 +29,5 @@ public class Timer
             return true;
         }
         return false;
-    }
+    }    
 }

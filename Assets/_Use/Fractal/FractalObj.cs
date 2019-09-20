@@ -18,6 +18,12 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
     Transform virTrans;//虚拟位置——为保证连线始终于球相连
     LineRenderer line;
     bool isMoving;
+    Material mat;
+    string matPropertyName = "alpha";
+    FractalObj parent;
+    public float matChangeTime = 0.5f;
+    public float matLowValue = 0.5f;
+    public float matLightValue = 1f;
     //public Material mat;
     //public float lineWidth = 0.05f;
     #endregion
@@ -89,6 +95,39 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
             virTrans = value;
         }
     }
+
+    public FractalObj Parent
+    {
+        get
+        {
+            if (parent == null)
+                parent = Trans.parent?.GetComponent<FractalObj>();
+            return parent;
+        }
+
+        set
+        {
+            parent = value;
+        }
+    }
+
+    public Material Mat
+    {
+        get
+        {
+            if (mat == null)
+            {
+                mat = Trans.GetComponent<MeshRenderer>().material;
+                curColor = mat.color;
+            }
+            return mat;
+        }
+
+        set
+        {
+            mat = value;
+        }
+    }
     #endregion
     #region Private Methods       
     private void Update()
@@ -104,7 +143,18 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
             }
         }
     }
-  
+    Color curColor;
+  void MatChange(float _value)
+    {
+        //Mat.SetFloat(matPropertyName,_value);
+        curColor.a = _value;
+        Mat.color = curColor;
+    }
+    float GetMatValue()
+    {
+        //return Mat.GetFloat(matPropertyName);
+        return curColor.a;
+    }
 
     #endregion
     #region Utility Methods
@@ -116,7 +166,28 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
         {
             StartCoroutine(Childs[i].IE_MoveOut(FractalFrame._instance.spreadingTime, UnityEngine.Random.onUnitSphere*FractalFrame._instance.spreadRadius));
         }
+        //该节点颜色变浅    
+        if(Childs.Count!=0)
+            StartCoroutine(IE_ColorChange(matChangeTime, matLowValue));
+        //该节点父的子颜色变浅
+        if (Parent != null) {
+            for (var i = 0; i < Parent.Childs.Count; i++)
+            {
+                if(Parent.Childs[i].id!=id)
+                StartCoroutine(Parent.Childs[i].IE_ColorChange(matChangeTime, matLowValue));
+            }
+        }
         yield return new WaitForSeconds(FractalFrame._instance.spreadingTime);
+    }
+    public IEnumerator IE_ColorChange(float _useTime,float _endValue)
+    {
+        var _count = Enum.GetValues(typeof(MorphingValueType)).Length;
+        var _org = new ValueData[_count];
+        var _target = new ValueData[_count];
+        var v0 = (int)MorphingValueType.value;
+        _org[v0] = new ValueData(MorphingTool.GetFloat4(GetMatValue()));
+        _target[v0] = new ValueData(MorphingTool.GetFloat4(_endValue));        
+        yield return StartCoroutine(MorphingTool._instance.IE_Morphing(this, _org, _target, _useTime));
     }
     //自身被展开，往外运动
     public IEnumerator IE_MoveOut(float _useTime, Vector3 _dir)
@@ -131,12 +202,16 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
         var v1 = (int)MorphingValueType.localScale;
         _org[v1] = new ValueData(MorphingTool.GetFloat4(Vector3.zero));
         _target[v1] = new ValueData(MorphingTool.GetFloat4(Vector3.one));
+        var v2 = (int)MorphingValueType.value;
+        _org[v2] = new ValueData(MorphingTool.GetFloat4(GetMatValue()));
+        _target[v2] = new ValueData(MorphingTool.GetFloat4(matLightValue));
         yield return StartCoroutine(MorphingTool._instance.IE_Morphing(this, _org, _target, _useTime));
     }
     //收缩,所有子也会收缩
     public IEnumerator IE_Contract(float _useTime)
     {
         isSpreading = false;
+        StartCoroutine(IE_ColorChange(matChangeTime, matLightValue));
         for (var i = 0; i < Childs.Count; i++)
         {
             if (Childs[i].isSpreading)
@@ -229,8 +304,19 @@ public class FractalObj : MonoBehaviour, ISelectable, ISetValue
             case MorphingValueType.color:
                 break;
             case MorphingValueType.value:
+                MatChange(MorphingTool.GetData( _value));
                 break;
         }
 }
+    //缓存一会儿：子收回，连线断开
+    public void SaveMoment()
+    {
+
+    }
+    //将缓存的节点拖入到新的位置
+    public void Insert()
+    {
+
+    }
     #endregion
 }

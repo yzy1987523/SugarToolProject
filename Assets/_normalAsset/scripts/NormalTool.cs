@@ -9,8 +9,8 @@ using UnityEngine;
 public class NormalTool
 {
     //权重随机：_roll是0-1的随机数
-    public static int GetRandomIndex(float[] _optionWeights,float _roll)
-    {        
+    public static int GetRandomIndex(float[] _optionWeights, float _roll)
+    {
         float sum = 0f;
         for (var i = 0; i < _optionWeights.Length; i++)
         {
@@ -59,5 +59,59 @@ public class NormalTool
         return x;
 
     }
-   
+    /// <summary>
+    /// 获取一组互斥的数据
+    /// </summary>
+    /// <param name="length">取值范围是0-length</param>
+    /// <param name="n">数量</param>
+    /// <returns></returns>
+    public static float[] GetMutExRandom(float length, int n)
+    {
+        var _result = new float[n];
+        var _unit = length / n;
+        var _radius = _unit * 0.5f;
+        for (var i = 0; i < n; i++)
+        {
+            _result[i] = GetGaussianRandom(_radius + _unit * i, _radius);
+        }
+        return _result;
+    }
+    /// <summary>
+    /// 获取一组点的中心点
+    /// </summary>
+    /// <param name="_points"></param>
+    /// <returns></returns>
+    public static Vector3 GetCenter(Vector3[] _points)
+    {
+        var _point0 = _points[0];
+        var _point1 = _points[0];
+        for (var i = 0; i < _points.Length; i++)
+        {
+            if (_point0.x > _points[i].x)
+            {
+                _point0.x = _points[i].x;
+            }
+            if (_point0.y > _points[i].y)
+            {
+                _point0.y = _points[i].y;
+            }
+            if (_point0.z > _points[i].z)
+            {
+                _point0.z = _points[i].z;
+            }
+            if (_point1.x < _points[i].x)
+            {
+                _point1.x = _points[i].x;
+            }
+            if (_point1.y < _points[i].y)
+            {
+                _point1.y = _points[i].y;
+            }
+            if (_point1.z < _points[i].z)
+            {
+                _point1.z = _points[i].z;
+            }
+        }
+        return (_point0 + _point1) * 0.5f;
+    }
 }

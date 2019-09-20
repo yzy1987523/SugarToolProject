@@ -76,6 +76,7 @@
     <Compile Include="Assets\_normalAsset\scripts\NormalTool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\SerializeTool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\Timer.cs" />
+    <Compile Include="Assets\_Use\DLL\DllTest.cs" />
     <Compile Include="Assets\_Use\Fractal\CamCtrl.cs" />
     <Compile Include="Assets\_Use\Fractal\FractalFrame.cs" />
     <Compile Include="Assets\_Use\Fractal\FractalNode.cs" />
@@ -101,6 +102,12 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

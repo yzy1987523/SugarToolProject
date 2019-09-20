@@ -10,7 +10,7 @@ public class FractalFrame : MonoBehaviour
     #region Parameters
     public static FractalFrame _instance;
     FractalNode treeRoot;
-    string savedataPath = "Assets/FractalData";
+    string savedataPath = "Assets/_Use/Fractal/FractalData";
     string nodePrefabPath = "Prefabs/FractalObj";
     public Dictionary<int, FractalObj> nodes = new Dictionary<int, FractalObj>();
     public float spreadingTime = 1;
