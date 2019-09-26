@@ -70,13 +70,16 @@
     <Compile Include="Assets\_normalAsset\scripts\DrawCurveMesh.cs" />
     <Compile Include="Assets\_normalAsset\scripts\EasingManager.cs" />
     <Compile Include="Assets\_normalAsset\scripts\ExpandMethods.cs" />
+    <Compile Include="Assets\_normalAsset\scripts\Geometry2D.cs" />
     <Compile Include="Assets\_normalAsset\scripts\GlobalPool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\InputManager.cs" />
     <Compile Include="Assets\_normalAsset\scripts\MorphingTool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\NormalTool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\SerializeTool.cs" />
     <Compile Include="Assets\_normalAsset\scripts\Timer.cs" />
+    <Compile Include="Assets\_Use\DLL\DllManager.cs" />
     <Compile Include="Assets\_Use\DLL\DllTest.cs" />
+    <Compile Include="Assets\_Use\DLL\Main.cs" />
     <Compile Include="Assets\_Use\Fractal\CamCtrl.cs" />
     <Compile Include="Assets\_Use\Fractal\FractalFrame.cs" />
     <Compile Include="Assets\_Use\Fractal\FractalNode.cs" />
@@ -99,6 +102,9 @@
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AssetBundleBrowser.Editor">
+      <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>D:/Projects/WorkProjects/SugarToolProject/SugarToolProject/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
